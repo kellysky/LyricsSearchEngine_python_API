@@ -4,8 +4,19 @@ import json
 import from_mongo_to_json
 import from_mongo
 import read_meta
+import getSimilarity
 
 app = Flask(__name__)
+
+@app.route('/api/similarity',methods=['POST'])
+def similarity_song():
+    data=request.json
+    s=json.loads(data)
+    song_list=getSimilarity.getSimilairy(s['query'])
+    answer = {'ans': song_list}
+    return json.dumps(answer),201
+
+
 @app.route('/api/index',methods=['POST'])
 def create_list():
     dada=request.json
